@@ -215,6 +215,14 @@ case $host in
     EXTERNAL_LDFLAGS="-Wl,--export-dynamic"
     EXTERNAL_EXTENSION=dll
     ;;
+*openbsd*)
+    OPENBSD=yes
+    platform=OpenBSD
+    portaudio=yes
+    portmidi=yes
+    EXTERNAL_CFLAGS="-fPIC"
+    EXTERNAL_LDFLAGS="-Wl,--export-dynamic -fPIC"
+    ;;
 *)
     platform=Unknown
     ;;
@@ -228,7 +236,9 @@ AM_CONDITIONAL(MACOSX, test x$MACOSX = xyes)
 AM_CONDITIONAL(WINDOWS, test x$WINDOWS = xyes)
 AM_CONDITIONAL(CYGWIN, test x$CYGWIN = xyes)
 AM_CONDITIONAL(MINGW, test x$MINGW = xyes)
+AM_CONDITIONAL(OPENBSD, test x$OPENBSD = xyes)
 
+AM_PROG_CC_C_O
 # pass include paths down to all Makefiles
 AC_SUBST([AM_CPPFLAGS], [$AM_CPPFLAGS])
 

@@ -9,6 +9,7 @@ AM_CFLAGS = -DNEWBUFFER
 AM_CPPFLAGS += \
     -I$(top_srcdir)/portaudio/portaudio/include \
     -I$(top_srcdir)/portaudio/portaudio/src/common
+AM_LDFLAGS = 
 
 #########################################
 ##### Files, Binaries, & Libs #####
@@ -66,6 +67,16 @@ libportaudio_la_SOURCES += \
     portaudio/src/hostapi/asio/iasiothiscallresolver.cpp \
     portaudio/src/hostapi/asio/pa_asio.cpp
 endif
+endif
+
+if OPENBSD
+AM_CFLAGS += -DPA_USE_SNDIO
+AM_CPPFLAGS += -I$(top_srcdir)/portaudio/portaudio/src/os/unix
+AM_LDFLAGS += -lsndio
+libportaudio_la_SOURCES += \
+    portaudio/src/os/unix/pa_unix_hostapis.c \
+    portaudio/src/os/unix/pa_unix_util.c \
+    portaudio/src/hostapi/sndio/pa_sndio.c
 endif
 
 # include the headers in the dist so you can build

@@ -8,5 +8,6 @@ Description: Portable audio I/O
 Requires:
 Version: 19
 
-Libs: -L${libdir} -lportaudio @LIBS@
-Cflags: -I${includedir} @THREAD_CFLAGS@
+Libs: -L${libdir} -lportaudio
+Libs.private: @LIBS@
+Cflags: -I${includedir}
