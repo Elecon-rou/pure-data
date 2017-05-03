@@ -9,6 +9,7 @@ AM_CFLAGS = -DNEWBUFFER
 AM_CPPFLAGS += \
     -I$(top_srcdir)/portmidi/portmidi/pm_common \
     -I$(top_srcdir)/portmidi/portmidi/porttime
+AM_LDFLAGS =
 
 #########################################
 ##### Files, Binaries, & Libs #####
@@ -46,6 +47,15 @@ libportmidi_la_SOURCES += \
     portmidi/pm_win/pmwinmm.c
 endif
 
+if OPENBSD
+AM_CPPFLAGS += -I$(top_srcdir)/portmidi/portmidi/pm_openbsd
+AM_LDFALGS = -lsndio
+libportmidi_la_SOURCES += \
+    portmidi/porttime/ptobsd.c \
+    portmidi/pm_openbsd/pmobsd.c \
+    portmidi/pm_openbsd/pmsndio.c
+endif
+
 # include the headers in the dist so you can build
 nobase_noinst_HEADERS = \
     portmidi/pm_common/pminternal.h \
@@ -57,4 +67,6 @@ nobase_noinst_HEADERS = \
     portmidi/pm_mac/pmmacosxcm.h \
     portmidi/pm_mac/readbinaryplist.h \
     portmidi/pm_win/pmwinmm.h \
+    portmidi/pm_openbsd/pmobsd.h \
+    portmidi/pm_openbsd/pmsndio.h \
     portmidi/porttime/porttime.h
